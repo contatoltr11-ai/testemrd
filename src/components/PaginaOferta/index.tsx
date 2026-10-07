@@ -366,78 +366,6 @@ export default function PaginaOferta({
     </div>
 </div>
 
-{/* ✅ MELHORIA #5: 2 Planos lado a lado ($14 / $27) */}
-<div style={{
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: 'clamp(20px, 4vw, 24px)',
-    marginBottom: 'clamp(32px, 6vw, 40px)'
-}}>
-    {/* PLANO 1: ESSENCIAL - $14 */}
-    <div style={{
-        background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(96, 165, 250, 0.1))',
-        border: selectedPlan === 14 ? '3px solid #3b82f6' : '2px solid rgba(59, 130, 246, 0.3)',
-        borderRadius: '16px',
-        padding: 'clamp(20px, 5vw, 28px)',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        transition: 'all 0.3s ease',
-        transform: selectedPlan === 14 ? 'scale(1.02)' : 'scale(1)'
-    }}>
-        <div style={{ marginBottom: 'clamp(16px, 4vw, 20px)' }}>
-            <h3 style={{ fontSize: 'clamp(1.25rem, 5vw, 1.6rem)', color: '#3b82f6', fontWeight: '900', margin: '0 0 8px 0' }}>
-                Plan Essencial
-            </h3>
-            <p style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'rgba(255,255,255,0.8)', margin: 0 }}>
-                Para quien quiere empezar
-            </p>
-        </div>
-        <div style={{ marginBottom: 'clamp(20px, 4vw, 24px)' }}>
-            <p style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1rem)', color: 'rgba(255,255,255,0.6)', textDecoration: 'line-through', margin: '0 0 4px 0' }}>
-                USD 147
-            </p>
-            <p style={{ fontSize: 'clamp(2.5rem, 8vw, 3.5rem)', color: '#3b82f6', fontWeight: '900', margin: '0 0 4px 0', lineHeight: '1' }}>
-                $14
-            </p>
-            <p style={{ fontSize: 'clamp(0.85rem, 3.5vw, 1rem)', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
-                USD 0.47 por día (30 días)
-            </p>
-            <p style={{ fontSize: 'clamp(0.8rem, 3vw, 0.95rem)', color: '#60a5fa', fontWeight: '700', margin: '6px 0 0 0' }}>
-                ✅ Pago único — sin mensualidades
-            </p>
-        </div>
-        <div style={{ marginBottom: 'clamp(20px, 4vw, 24px)', flex: 1 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'white' }}>✅ Protocolo de 72 Horas Completo</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'white' }}>✅ Módulos 1-3 (Contacto Cero + Atracción + Reconquista)</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'white' }}>✅ 10 Templates de Mensajes Irresistibles</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'white' }}>✅ E-Book: 7 Pasos Para Ser Irresistible</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'white' }}>✅ Soporte por Email</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'white' }}>✅ Garantía de 30 Días</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'rgba(255,255,255,0.4)' }}>❌ Módulo 4: Protocolo de Emergencia</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'rgba(255,255,255,0.4)' }}>❌ Soporte WhatsApp Prioritario</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: 'rgba(255,255,255,0.4)' }}>❌ Comunidad Privada</div>
-            </div>
-        </div>
-        <button 
-            onClick={() => setSelectedPlan(14)}
-            style={{
-                background: selectedPlan === 14 ? '#3b82f6' : 'transparent',
-                color: 'white',
-                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                fontWeight: '900',
-                padding: 'clamp(16px, 4vw, 20px)',
-                borderRadius: '12px',
-                border: '3px solid #60a5fa',
-                cursor: 'pointer',
-                width: '100%',
-                transition: 'all 0.3s ease'
-            }}
-        >
-            {selectedPlan === 14 ? '✅ PLAN SELECCIONADO' : 'ELEGIR PLAN ESSENCIAL'}
-        </button>
-    </div>
     {/* PLANO 2: TOTAL (RECOMENDADO) - $27 */}
     <div style={{
         background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(74, 222, 128, 0.1))',
@@ -495,7 +423,7 @@ export default function PaginaOferta({
         </div>
         <div style={{ marginBottom: 'clamp(20px, 4vw, 24px)' }}>
             <p style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1rem)', color: 'rgba(255,255,255,0.6)', textDecoration: 'line-through', margin: '0 0 4px 0' }}>
-                USD 297
+                USD 342
             </p>
             <p style={{ fontSize: 'clamp(2.5rem, 8vw, 3.5rem)', color: '#10b981', fontWeight: '900', margin: '0 0 4px 0', lineHeight: '1' }}>
                 $27
@@ -520,13 +448,27 @@ export default function PaginaOferta({
         </div>
         <div style={{ marginBottom: 'clamp(20px, 4vw, 24px)', flex: 1 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {/* ✅ MELHORIA #8: Total dos bonos riscado */}
+                <div style={{
+                    background: 'rgba(234, 179, 8, 0.18)',
+                    border: '1px solid rgba(234, 179, 8, 0.4)',
+                    borderRadius: '8px',
+                    padding: '8px 12px',
+                    textAlign: 'center',
+                    marginBottom: '4px'
+                }}>
+                    <span style={{ fontSize: 'clamp(0.85rem, 3.2vw, 1rem)', color: '#facc15', fontWeight: '900' }}>
+                        🎁 Hoy +6 bonos incluidos — valor total <span style={{ textDecoration: 'line-through' }}>$342</span>
+                    </span>
+                </div>
                 <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>✅ TODO del Plan Essencial +</div>
-                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Módulo 4: Protocolo de Emergencia</div>
-                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Soporte WhatsApp Prioritario 24/7</div>
-                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Comunidad Privada de Apoyo</div>
-                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Garantía Extendida de 60 Días</div>
-                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Bônus: Guía "Cómo Leer Su Mente"</div>
-                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Actualizaciones de por vida</div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Módulo 4: Protocolo de Emergencia <span style={{ color: '#facc15', fontWeight: '900' }}>(De $47 a GRATIS)</span></div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Soporte WhatsApp Prioritario 24/7 <span style={{ color: '#facc15', fontWeight: '900' }}>(De $47 a GRATIS)</span></div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Comunidad Privada de Apoyo <span style={{ color: '#facc15', fontWeight: '900' }}>(De $67 a GRATIS)</span></div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Bônus: Guía "Cómo Leer Su Mente" <span style={{ color: '#facc15', fontWeight: '900' }}>(De $37 a GRATIS)</span></div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>🔥 Actualizaciones de por vida <span style={{ color: '#facc15', fontWeight: '900' }}>(De $47 a GRATIS)</span></div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#fef08a', fontWeight: '800' }}>🎁 Regalo Sorpresa (misterioso) <span style={{ color: '#facc15', fontWeight: '900' }}>(De $97 a GRATIS)</span></div>
+                <div style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#4ade80', fontWeight: '700' }}>✅ Garantía Extendida de 60 Días</div>
             </div>
         </div>
         <button 
@@ -548,7 +490,6 @@ export default function PaginaOferta({
             {selectedPlan === 27 ? '✅ PLAN SELECCIONADO' : '🚀 ELEGIR PLAN TOTAL (RECOMENDADO)'}
         </button>
     </div>
-</div>
 {/* ✅ CTA PRINCIPAL - POSIÇÃO OTIMIZADA (logo após os planos) */}
 <button 
     className="cta-button btn-green btn-size-4 btn-animation-pulse" 

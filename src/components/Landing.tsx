@@ -106,10 +106,10 @@ export default function Landing({ onNavigate }: LandingProps) {
                             No fue falta de amor. <strong>Fue falta de timing.</strong>
                         </p>
 
-                        {/* 6. FAIXA DE PROVA SOCIAL — frase completa, destaque inline */}
-                        <p className="social-proof">
-                            <span className="proof-badge">Más de 9.000</span> hombres ya hicieron
-                            la lectura de escenario antes de mandar el próximo mensaje.
+                        {/* 6. FAIXA DE PROVA SOCIAL — frase-selo única, destaque inline */}
+                        <p className="proof-strip">
+                            <strong>Más de 9.000</strong> hombres ya hicieron la lectura de
+                            escenario antes de mandar el próximo mensaje.
                         </p>
 
                         {/* 7. CTA — vermelho sólido, full-width no mobile */}
@@ -284,8 +284,10 @@ export default function Landing({ onNavigate }: LandingProps) {
                     font-style: normal;
                 }
 
-                /* 6. PROVA SOCIAL — um parágrafo só, número e frase na mesma linha */
-                .social-proof {
+                /* 6. PROVA SOCIAL — frase-selo única, display: block explícito
+                   (classe renomeada: nenhum CSS antigo de flex pode afetá-la) */
+                .proof-strip {
+                    display: block;
                     width: 100%;
                     max-width: 430px;
                     border-top: 1px solid rgba(17, 24, 39, 0.1);
@@ -298,12 +300,10 @@ export default function Landing({ onNavigate }: LandingProps) {
                     color: rgba(17, 24, 39, 0.75);
                 }
 
-                .proof-badge {
-                    font-family: Georgia, serif;
-                    font-size: 1.08rem;
-                    font-weight: 700;
+                /* Destaque inline — mesmo tamanho da frase, vermelho bold */
+                .proof-strip strong {
                     color: #dc2626;
-                    white-space: nowrap;
+                    font-weight: 700;
                 }
 
                 /* 7. CTA — vermelho sólido, full-width no mobile */

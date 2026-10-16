@@ -14,16 +14,19 @@ export default function Landing({ onNavigate }: LandingProps) {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             const utms: Record<string, string> = {};
+
             const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
             utmParams.forEach(param => {
                 const value = urlParams.get(param);
                 if (value) utms[param] = value;
             });
+
             const clickIds = ['fbclid', 'gclid', 'ttclid'];
             clickIds.forEach(param => {
                 const value = urlParams.get(param);
                 if (value) utms[param] = value;
             });
+
             if (Object.keys(utms).length > 0) {
                 localStorage.setItem('quiz_utms', JSON.stringify(utms));
                 console.log('✅ UTMs capturadas:', utms);
@@ -45,46 +48,73 @@ export default function Landing({ onNavigate }: LandingProps) {
         onNavigate('chat');
     };
 
+    // 📰 Data do dia renderizada em espanhol (estilo portal de notícias)
+    const fechaHoy = new Date().toLocaleDateString('es-ES', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+
     return (
         <div className="landing-container">
             <div className="matrix-bg"></div>
             <div className="scanlines"></div>
+
             <div className="content-wrapper">
-                <main className="landing-main-simple">
-                    {/* 1. HEADLINE — copy que converte, com hierarquia visual refinada */}
-                    <h1 className="hero-headline">
-                        <span className="headline-primary">
-                            Crees que ser un hombre 'bueno, paciente y comprensivo'
-                            <span className="highlight-orange"> es lo que la traerá de vuelta?</span>
-                        </span>
-                        <span className="headline-secondary">
-                            Sí, eso es exactamente lo que el hombre que ella dejó de desear piensa
-                            mientras ve <span className="highlight-orange">cómo su propia relación se muere</span>.
-                        </span>
-                    </h1>
+                <article className="article-frame">
 
-                    {/* 2. SUB — o que ele vai descobrir */}
-                    <p className="hero-sub">
-                        Responde 7 preguntas y te digo el <strong>próximo paso exacto</strong> para que ella vuelva a verte.
-                    </p>
-
-                    {/* 3. CTA — o motor de conversão (urgência de tempo) */}
-                    <div className="cta-section">
-                        <button className="cta-button" onClick={handleCTAClick}>
-                            <span className="cta-glow"></span>
-                            <span className="cta-icon">⏰</span>
-                            <span className="cta-text">DESCUBRIR SI AÚN HAY TIEMPO</span>
-                        </button>
-                        <p className="cta-micro">Haz el test rápido — 2 minutos y esto puede cambiar tu caso.</p>
+                    {/* 0. BARRA SUPERIOR — categoria + data (sem logo de veículo) */}
+                    <div className="news-bar">
+                        <span className="news-category">Psicología Conductual · Relaciones</span>
+                        <span className="news-date">{fechaHoy}</span>
                     </div>
-                </main>
 
-                {/* 4. FOOTER — segurança */}
-                <footer className="landing-footer">
-                    <p className="disclaimer">🔒 100% anónimo • Sin juicio • Sin email</p>
-                </footer>
+                    <main className="landing-main-simple">
+
+                        {/* 1. MANCHETE (serifada, estilo notícia) */}
+                        <h1 className="hero-headline">
+                            Experto en reconquista presenta la metodología que ya ha ayudado a más de{' '}
+                            <span className="accent">9.000 hombres</span> a recuperar a su ex.
+                        </h1>
+
+                        {/* 2. SUBHEADLINE — a dor + o mecanismo */}
+                        <p className="hero-sub">
+                            Descubre la <strong>Ventana Neuroquímica de 72 Horas</strong> que decide si
+                            ella te va a recibir… <em>o te va a olvidar para siempre.</em>
+                        </p>
+
+                        {/* 3. CORPO ESTILO ARTIGO (primeiro parágrafo da "notícia") */}
+                        <p className="article-body">
+                            Un error que casi todos los hombres cometen después de una ruptura:
+                            escribir demasiado pronto, suplicar, pedir perdón. Lo que la psicología
+                            conductual muestra es que <strong>no fue falta de amor. Fue falta de
+                            timing.</strong> Existe una ventana en su cerebro — y cuando se lee bien,
+                            los buenos recuerdos vuelven. Cuando se ignora, cada mensaje llega como
+                            presión, no como deseo.
+                        </p>
+
+                        {/* 4. PROVA SOCIAL (faixa) */}
+                        <div className="social-proof">
+                            <span className="proof-badge">+9.000</span>
+                            <p>hombres ya hicieron la lectura de escenario antes de mandar el próximo mensaje.</p>
+                        </div>
+
+                        {/* 5. CTA — vermelho de alto contraste */}
+                        <button className="hero-cta" onClick={handleCTAClick}>
+                            QUIERO SABER SI ESTOY DENTRO DEL PLAZO
+                        </button>
+
+                        {/* 6. MICROCOPY DO RODAPÉ */}
+                        <p className="hero-safety">
+                            Tarda menos de 2 minutos. Gratis y anónimo.<br />
+                            Claridad antes del mensaje. Estrategia antes de la insistencia.
+                        </p>
+
+                    </main>
+                </article>
             </div>
 
+            {/* CSS INLINE */}
             <style jsx="true">{`
                 .landing-container {
                     min-height: 100vh;
@@ -95,189 +125,260 @@ export default function Landing({ onNavigate }: LandingProps) {
                     background: #000;
                     overflow: hidden;
                 }
+
                 .matrix-bg {
                     position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                     z-index: 0;
                 }
+
                 .scanlines {
                     position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                     z-index: 1;
                     pointer-events: none;
                 }
+
                 .content-wrapper {
                     position: relative;
                     z-index: 2;
                     width: 100%;
-                    max-width: 760px;
-                    padding: 2rem 2rem 1rem;
+                    max-width: 800px;
+                    padding: 1.5rem;
                 }
+
+                /* ========================================
+                   MOLDURA DA "NOTÍCIA"
+                   Caixa branca emoldurada em preto —
+                   conversa com o app preto do diagnóstico.
+                   ======================================== */
+                .article-frame {
+                    background: #fff;
+                    border: 12px solid #000;
+                    border-radius: 0;
+                    width: 100%;
+                    max-width: 560px;
+                    margin: 0 auto;
+                    padding: 0 1.5rem 2rem;
+                    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+                }
+
+                /* 0. BARRA SUPERIOR DO PORTAL */
+                .news-bar {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                    padding: 0.85rem 0;
+                    border-bottom: 2px solid #111827;
+                    margin-bottom: 1.5rem;
+                }
+
+                .news-category {
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    color: #111827;
+                }
+
+                .news-date {
+                    font-size: 0.72rem;
+                    color: rgba(17, 24, 39, 0.55);
+                }
+
                 .landing-main-simple {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    justify-content: center;
                     text-align: center;
-                    gap: 1.75rem;
-                    min-height: 72vh;
+                    gap: 1.1rem;
                 }
 
-                /* ===== HEADLINE — hierarquia por tamanho + opacidade ===== */
+                /* 1. MANCHETE — serifada, estilo jornal */
                 .hero-headline {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.9rem;
-                    max-width: 680px;
-                    margin: 0;
-                }
-                .headline-primary {
-                    font-size: 1.9rem;
-                    line-height: 1.28;
-                    font-weight: 800;
-                    color: #fff;
-                    letter-spacing: -0.3px;
-                }
-                .headline-secondary {
-                    font-size: 1.05rem;
-                    line-height: 1.5;
-                    font-weight: 600;
-                    color: rgba(255, 255, 255, 0.82);
-                }
-                .highlight-orange {
-                    background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    font-weight: 800;
-                }
-
-                /* ===== SUB ===== */
-                .hero-sub {
-                    font-size: 1.1rem;
-                    line-height: 1.55;
-                    color: rgba(255, 255, 255, 0.78);
-                    max-width: 520px;
-                    margin: 0;
-                }
-                .hero-sub strong {
-                    color: #fff;
+                    text-align: center;
+                    font-family: Georgia, 'Times New Roman', serif;
+                    font-size: 1.7rem;
+                    line-height: 1.25;
+                    color: #111827;
                     font-weight: 700;
+                    letter-spacing: -0.3px;
+                    margin: 0;
                 }
 
-                /* ===== CTA — urgência (vermelho + relógio + pulso) ===== */
-                .cta-section {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 0.6rem;
-                    width: 100%;
+                .hero-headline .accent {
+                    color: #dc2626;
                 }
-                .cta-button {
-                    background: linear-gradient(135deg, #ff3b3b 0%, #ff6b6b 100%);
+
+                /* 2. SUBHEADLINE */
+                .hero-sub {
+                    text-align: center;
+                    font-size: 1.02rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.7);
+                    margin: 0;
+                    max-width: 440px;
+                }
+
+                .hero-sub strong {
+                    color: #111827;
+                }
+
+                /* 3. CORPO DO ARTIGO */
+                .article-body {
+                    text-align: left;
+                    font-size: 0.98rem;
+                    line-height: 1.65;
+                    color: rgba(17, 24, 39, 0.85);
+                    margin: 0;
+                }
+
+                .article-body strong {
+                    color: #111827;
+                }
+
+                /* 4. FAIXA DE PROVA SOCIAL */
+                .social-proof {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    width: 100%;
+                    max-width: 440px;
+                    background: rgba(220, 38, 38, 0.06);
+                    border: 1px solid rgba(220, 38, 38, 0.25);
+                    border-radius: 10px;
+                    padding: 0.75rem 0.95rem;
+                    text-align: left;
+                }
+
+                .proof-badge {
+                    flex-shrink: 0;
+                    font-family: Georgia, serif;
+                    font-size: 1.15rem;
+                    font-weight: 700;
+                    color: #dc2626;
+                }
+
+                .social-proof p {
+                    margin: 0;
+                    font-size: 0.85rem;
+                    line-height: 1.4;
+                    color: rgba(17, 24, 39, 0.8);
+                }
+
+                /* 5. CTA — vermelho sólido, caixa alta */
+                .hero-cta {
+                    background: #dc2626;
                     color: #fff;
                     border: none;
-                    border-radius: 16px;
-                    padding: 1.4rem 2.5rem;
-                    font-size: 1.25rem;
+                    border-radius: 10px;
+                    padding: 16px 34px;
+                    font-size: 1.08rem;
                     font-weight: 700;
                     text-transform: uppercase;
-                    letter-spacing: 0.8px;
+                    letter-spacing: 0.5px;
                     cursor: pointer;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 8px 24px rgba(255, 59, 59, 0.4);
-                    position: relative;
-                    overflow: hidden;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 0.8rem;
-                    min-width: min(90%, 560px);
-                    z-index: 1;
+                    transition: all 0.25s ease;
+                    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+                    max-width: 95%;
+                    text-align: center;
+                    line-height: 1.3;
                     animation: pulse-cta 2s ease-in-out infinite;
                 }
+
                 @keyframes pulse-cta {
                     0%, 100% {
                         transform: scale(1);
-                        box-shadow: 0 8px 24px rgba(255, 59, 59, 0.4);
+                        box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
                     }
                     50% {
                         transform: scale(1.04);
-                        box-shadow: 0 12px 32px rgba(255, 59, 59, 0.7);
+                        box-shadow: 0 12px 32px rgba(220, 38, 38, 0.65);
                     }
                 }
-                .cta-button:hover {
+
+                .hero-cta:hover {
                     transform: translateY(-3px) scale(1.04);
-                    box-shadow: 0 12px 32px rgba(255, 59, 59, 0.6);
+                    box-shadow: 0 12px 32px rgba(220, 38, 38, 0.6);
                     animation: none;
                 }
-                .cta-button:active {
+
+                .hero-cta:active {
                     transform: translateY(-1px) scale(1.02);
                 }
-                .cta-icon {
-                    font-size: 1.7rem;
-                    position: relative;
-                    z-index: 2;
-                    animation: tick 1.6s ease-in-out infinite;
-                }
-                @keyframes tick {
-                    0%, 100% { transform: rotate(0deg) scale(1); }
-                    50% { transform: rotate(-6deg) scale(1.08); }
-                }
-                .cta-text {
-                    position: relative;
-                    z-index: 2;
-                }
-                .cta-glow {
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                    animation: glow-slide 3s infinite;
-                    z-index: 1;
-                }
-                @keyframes glow-slide {
-                    0% { transform: translateX(-100%); }
-                    100% { transform: translateX(100%); }
-                }
-                .cta-micro {
-                    font-size: 0.9rem;
-                    color: rgba(255, 255, 255, 0.55);
-                    margin: 0;
-                }
 
-                /* ===== FOOTER ===== */
-                .landing-footer {
+                /* 6. MICROCOPY DO RODAPÉ */
+                .hero-safety {
                     text-align: center;
-                    padding: 1.5rem 0 0.5rem;
-                }
-                .disclaimer {
-                    font-size: 0.85rem;
-                    color: rgba(255, 255, 255, 0.5);
+                    font-size: 0.82rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.55);
                     margin: 0;
                 }
 
-                /* ===== RESPONSIVO ===== */
+                /* RESPONSIVO */
                 @media (max-width: 768px) {
-                    .content-wrapper { padding: 1.5rem 1.25rem 0.5rem; }
-                    .landing-main-simple { gap: 1.5rem; min-height: auto; }
-                    .headline-primary { font-size: 1.6rem; }
-                    .headline-secondary { font-size: 0.98rem; }
-                    .cta-button { padding: 1.25rem 1.75rem; font-size: 1.1rem; min-width: 100%; }
-                }
-                @media (max-width: 480px) {
-                    .headline-primary { font-size: 1.42rem; }
-                    .headline-secondary { font-size: 0.92rem; }
-                    .hero-sub { font-size: 1rem; }
-                    .cta-button {
-                        padding: 1.1rem 1.25rem;
-                        font-size: 1rem;
-                        flex-direction: column;
-                        gap: 0.4rem;
+                    .content-wrapper {
+                        padding: 0.75rem;
                     }
-                    .cta-icon { font-size: 1.5rem; }
+
+                    .article-frame {
+                        border-width: 10px;
+                        padding: 0 1.25rem 1.75rem;
+                    }
+
+                    .landing-main-simple {
+                        gap: 1rem;
+                    }
+
+                    .hero-headline {
+                        font-size: 1.5rem;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .content-wrapper {
+                        padding: 0.5rem;
+                    }
+
+                    .article-frame {
+                        border-width: 8px;
+                        padding: 0 1rem 1.5rem;
+                    }
+
+                    .landing-main-simple {
+                        gap: 0.9rem;
+                    }
+
+                    .hero-headline {
+                        font-size: 1.3rem;
+                    }
+
+                    .hero-sub {
+                        font-size: 0.95rem;
+                    }
+
+                    .article-body {
+                        font-size: 0.92rem;
+                    }
+
+                    .hero-cta {
+                        padding: 14px 24px;
+                        font-size: 1rem;
+                    }
+
+                    .news-bar {
+                        padding: 0.7rem 0;
+                        margin-bottom: 1.2rem;
+                    }
                 }
             `}</style>
         </div>

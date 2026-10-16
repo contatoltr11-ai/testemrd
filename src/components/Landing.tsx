@@ -101,16 +101,9 @@ export default function Landing({ onNavigate }: LandingProps) {
                             </p>
                         </div>
 
-                        {/* 5. CORPO ESTILO ARTIGO */}
-                        <p className="article-body">
-                            El error que casi todos los hombres cometen después de una ruptura es
-                            escribir demasiado pronto: suplicar, pedir perdón, mandar mensajes
-                            largos. Lo que pocos saben es que <strong>no fue falta de amor. Fue
-                            falta de timing.</strong> Existe una ventana en su cerebro — la{' '}
-                            <strong>Ventana Neuroquímica de 72 Horas</strong> — que decide cómo se
-                            recibe cada acercamiento. Cuando esa ventana se lee bien, su mente le
-                            da espacio a los buenos recuerdos. Cuando se la ignora, cualquier
-                            mensaje llega como presión… no como deseo.
+                        {/* 5. MICRO-LINHA DE IMPACTO — substitui o corpo longo */}
+                        <p className="timing-hook">
+                            No fue falta de amor. <strong>Fue falta de timing.</strong>
                         </p>
 
                         {/* 6. FAIXA DE PROVA SOCIAL */}
@@ -192,7 +185,7 @@ export default function Landing({ onNavigate }: LandingProps) {
                     flex-wrap: wrap;
                     padding: 0.7rem 0;
                     border-bottom: 1px solid rgba(17, 24, 39, 0.12);
-                    margin-bottom: 1.3rem;
+                    margin-bottom: 1.25rem;
                 }
 
                 .news-category {
@@ -213,7 +206,7 @@ export default function Landing({ onNavigate }: LandingProps) {
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
-                    gap: 1.05rem;
+                    gap: 1rem;
                 }
 
                 /* 2. HEADLINE — serifada, bicolor */
@@ -275,19 +268,20 @@ export default function Landing({ onNavigate }: LandingProps) {
                     font-weight: 700;
                 }
 
-                /* 5. CORPO DO ARTIGO */
-                .article-body {
-                    text-align: left;
-                    font-size: 0.94rem;
-                    line-height: 1.7;
-                    color: rgba(17, 24, 39, 0.82);
+                /* 5. MICRO-LINHA DE IMPACTO — citação da matéria */
+                .timing-hook {
+                    text-align: center;
+                    font-family: Georgia, 'Times New Roman', serif;
+                    font-style: italic;
+                    font-size: 1.05rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.85);
                     margin: 0;
-                    max-width: 460px;
                 }
 
-                .article-body strong {
+                .timing-hook strong {
                     color: #111827;
-                    font-weight: 600;
+                    font-style: normal;
                 }
 
                 /* 6. PROVA SOCIAL — linha leve com filete */
@@ -392,11 +386,11 @@ export default function Landing({ onNavigate }: LandingProps) {
 
                     .news-bar {
                         padding: 0.6rem 0;
-                        margin-bottom: 1.1rem;
+                        margin-bottom: 1.05rem;
                     }
 
                     .landing-main-simple {
-                        gap: 0.85rem;
+                        gap: 0.8rem;
                     }
 
                     .hero-headline {
@@ -415,8 +409,8 @@ export default function Landing({ onNavigate }: LandingProps) {
                         font-size: 0.92rem;
                     }
 
-                    .article-body {
-                        font-size: 0.88rem;
+                    .timing-hook {
+                        font-size: 0.98rem;
                     }
 
                     .hero-cta {

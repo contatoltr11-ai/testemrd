@@ -106,11 +106,11 @@ export default function Landing({ onNavigate }: LandingProps) {
                             No fue falta de amor. <strong>Fue falta de timing.</strong>
                         </p>
 
-                        {/* 6. FAIXA DE PROVA SOCIAL */}
-                        <div className="social-proof">
-                            <span className="proof-badge">+9.000</span>
-                            <p>hombres ya hicieron la lectura de escenario antes de mandar el próximo mensaje.</p>
-                        </div>
+                        {/* 6. FAIXA DE PROVA SOCIAL — frase completa, destaque inline */}
+                        <p className="social-proof">
+                            <span className="proof-badge">Más de 9.000</span> hombres ya hicieron
+                            la lectura de escenario antes de mandar el próximo mensaje.
+                        </p>
 
                         {/* 7. CTA — vermelho sólido, full-width no mobile */}
                         <button className="hero-cta" onClick={handleCTAClick}>
@@ -284,33 +284,26 @@ export default function Landing({ onNavigate }: LandingProps) {
                     font-style: normal;
                 }
 
-                /* 6. PROVA SOCIAL — linha leve com filete */
+                /* 6. PROVA SOCIAL — um parágrafo só, número e frase na mesma linha */
                 .social-proof {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 0.5rem;
                     width: 100%;
                     max-width: 430px;
                     border-top: 1px solid rgba(17, 24, 39, 0.1);
                     border-bottom: 1px solid rgba(17, 24, 39, 0.1);
-                    padding: 0.8rem 0.5rem;
+                    padding: 0.85rem 0.5rem;
+                    margin: 0;
                     text-align: center;
+                    font-size: 0.88rem;
+                    line-height: 1.55;
+                    color: rgba(17, 24, 39, 0.75);
                 }
 
                 .proof-badge {
-                    flex-shrink: 0;
                     font-family: Georgia, serif;
-                    font-size: 1.05rem;
+                    font-size: 1.08rem;
                     font-weight: 700;
                     color: #dc2626;
-                }
-
-                .social-proof p {
-                    margin: 0;
-                    font-size: 0.84rem;
-                    line-height: 1.4;
-                    color: rgba(17, 24, 39, 0.7);
+                    white-space: nowrap;
                 }
 
                 /* 7. CTA — vermelho sólido, full-width no mobile */
@@ -417,10 +410,6 @@ export default function Landing({ onNavigate }: LandingProps) {
                         max-width: 100%;
                         padding: 15px 20px;
                         font-size: 0.98rem;
-                    }
-
-                    .social-proof p {
-                        font-size: 0.8rem;
                     }
                 }
             `}</style>

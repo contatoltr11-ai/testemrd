@@ -78,10 +78,12 @@ export default function Landing({ onNavigate }: LandingProps) {
                     <main className="landing-main">
 
                         {/* ============================================
-                            ZONA DA DOBRA — tudo visível sem rolar no mobile
+                            ZONA DA DOBRA — fluxo compacto, sem esticamento
                             Ordem: manchete → byline → frescor → parágrafo → CTA
+                            FIX: sem min-height e sem margin-top:auto —
+                            o botão fica a 16px do parágrafo
                             ============================================ */}
-                        <div className="fold-zone">
+                        <div className="fold-stack">
 
                             {/* 2. MANCHETE — bicolor */}
                             <h1 className="hero-headline">
@@ -104,8 +106,8 @@ export default function Landing({ onNavigate }: LandingProps) {
                                 te va a recibir… <em>o te va a olvidar para siempre.</em>
                             </p>
 
-                            {/* 6. CTA — fecha a dobra, zona do polegar */}
-                            <div className="cta-group">
+                            {/* 6. CTA — imediatamente após o parágrafo (vão 16px) */}
+                            <div className="cta-block">
                                 <button className="hero-cta" onClick={handleCTAClick}>
                                     QUIERO RECUPERAR A MI EX →
                                 </button>
@@ -120,7 +122,7 @@ export default function Landing({ onNavigate }: LandingProps) {
                             ABAIXO DA DOBRA — nada é deletado, só desce
                             ============================================ */}
 
-                        {/* 7. MICRO-LINHA DE IMPACTO */}
+                        {/* 7. MICRO-LINHA DE IMPACTO — vão do microcopy: 36px */}
                         <p className="timing-hook">
                             No fue falta de amor. <strong>Fue falta de timing.</strong>
                         </p>
@@ -157,7 +159,9 @@ export default function Landing({ onNavigate }: LandingProps) {
                     min-height: 100vh;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    /* FIX: flex-start evita clip de conteúdo centralizado
+                       quando a página passa da dobra */
+                    justify-content: flex-start;
                     position: relative;
                     background: #fff;
                     overflow: hidden;
@@ -190,14 +194,15 @@ export default function Landing({ onNavigate }: LandingProps) {
                     padding: 0;
                 }
 
+                /* FIX: sem min-height — a altura é a do conteúdo.
+                   O fundo branco de tela cheia fica garantido pelo
+                   .landing-container (background #fff + min-height 100vh) */
                 .article-frame {
                     background: #fff;
                     width: 100%;
                     max-width: 560px;
                     margin: 0 auto;
                     padding: 1rem 1.4rem 1.6rem;
-                    min-height: 100vh;
-                    min-height: 100dvh;
                 }
 
                 /* 1. TAG + DATA */
@@ -233,19 +238,16 @@ export default function Landing({ onNavigate }: LandingProps) {
                 }
 
                 /* ============================================
-                   ZONA DA DOBRA — ocupa a primeira tela do celular
-                   CTA empatado no pé (zona do polegar)
+                   ZONA DA DOBRA — fluxo natural, sem esticamento
+                   (classe renomeada: CSS antigo não encontra alvo)
                    ============================================ */
-                .fold-zone {
+                .fold-stack {
                     width: 100%;
                     max-width: 460px;
-                    min-height: calc(100vh - 76px);
-                    min-height: calc(100dvh - 76px);
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 0.85rem;
-                    padding-bottom: 0.8rem;
+                    gap: 1rem;
                 }
 
                 /* 2. MANCHETE — serifada, bicolor */
@@ -313,15 +315,14 @@ export default function Landing({ onNavigate }: LandingProps) {
                     color: #111827;
                 }
 
-                /* 6. CTA — empurrado pro pé da primeira tela */
-                .cta-group {
-                    margin-top: auto;
+                /* 6. CTA — FIX: sem margin-top:auto e sem padding-top.
+                   O vão parágrafo→botão é o gap de 1rem (16px) do .fold-stack */
+                .cta-block {
                     width: 100%;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     gap: 0.5rem;
-                    padding-top: 1rem;
                 }
 
                 .hero-cta {
@@ -377,14 +378,14 @@ export default function Landing({ onNavigate }: LandingProps) {
                    ABAIXO DA DOBRA
                    ============================================ */
 
-                /* 7. MICRO-LINHA DE IMPACTO */
+                /* 7. MICRO-LINHA DE IMPACTO — vão do microcopy: 2.25rem (36px) */
                 .timing-hook {
                     font-family: Georgia, 'Times New Roman', serif;
                     font-style: italic;
                     font-size: 1.02rem;
                     line-height: 1.5;
                     color: rgba(17, 24, 39, 0.85);
-                    margin: 1.8rem 0 0;
+                    margin: 2.25rem 0 0;
                     text-align: center;
                 }
 
@@ -478,10 +479,8 @@ export default function Landing({ onNavigate }: LandingProps) {
                         margin-bottom: 0.75rem;
                     }
 
-                    .fold-zone {
-                        gap: 0.7rem;
-                        min-height: calc(100vh - 64px);
-                        min-height: calc(100dvh - 64px);
+                    .fold-stack {
+                        gap: 0.85rem;
                     }
 
                     .hero-headline {
@@ -495,6 +494,10 @@ export default function Landing({ onNavigate }: LandingProps) {
                     .hero-sub {
                         font-size: 0.85rem;
                         line-height: 1.45;
+                    }
+
+                    .timing-hook {
+                        margin-top: 2rem;
                     }
 
                     .hero-cta {

@@ -34,12 +34,12 @@ interface Question {
 const QUESTIONS: Question[] = [
   {
     id: 1,
-    text: 'Para calibrar el análisis, necesito saber: ¿cuál es tu género?',
+    text: 'Para que tu plan sea preciso: ¿cuál es tu género?',
     options: ['HOMBRE', 'MUJER'],
     response: 'Entendido.',
     responseByGender: {
-      HOMBRE: 'Perfecto. Voy a calibrar el análisis basado en los patrones específicos de comportamiento femenino después de una ruptura. Cada respuesta que des me ayudará a entender exactamente qué está pasando con ella.',
-      MUJER: 'Perfecto. Voy a calibrar el análisis basado en los patrones específicos de comportamiento masculino después de una ruptura. Cada respuesta que des me ayudará a entender exactamente qué está pasando con él.'
+      HOMBRE: 'Perfecto. Ya sé lo esencial: buscas reconquistar a una mujer. Ahora voy a calibrar el análisis con los patrones específicos de comportamiento femenino después de una ruptura.',
+      MUJER: 'Perfecto. Ya sé lo esencial: buscas reconquistar a un hombre. Ahora voy a calibrar el análisis con los patrones específicos de comportamiento masculino después de una ruptura.'
     },
     dataKey: 'gender',
   },
@@ -166,7 +166,7 @@ export default function Chat({ onNavigate }: ChatProps) {
 
     const initialMessage: Message = {
       type: 'bot',
-      text: 'Hola. Soy Sophia Sanchez, especialista en reconquista mediante psicología conductual. Mi sistema detectó tu búsqueda de respuestas. Estoy aquí para analizar tu caso.',
+      text: 'Hola. Soy Sophia Sanchez, especialista en reconquista y psicología conductual. Voy a hacerte 7 preguntas rápidas para armar tu plan. Menos de 2 minutos.',
       isTyping: true,
     };
 
@@ -175,7 +175,7 @@ export default function Chat({ onNavigate }: ChatProps) {
     typewriterTimeoutRef.current = setTimeout(() => {
       setMessages([{ ...initialMessage, isTyping: false }]);
       setTimeout(() => setShowOptions(true), 300);
-    }, initialMessage.text.length * 50);
+    }, initialMessage.text.length * 24);
 
     return () => {
       if (typewriterTimeoutRef.current) clearTimeout(typewriterTimeoutRef.current);
@@ -206,7 +206,7 @@ export default function Chat({ onNavigate }: ChatProps) {
     typewriterTimeoutRef.current = setTimeout(() => {
       setMessages(prev => prev.map((msg, idx) => idx === prev.length - 1 ? { ...msg, isTyping: false } : msg));
       setTimeout(() => setShowOptions(true), 300);
-    }, question.text.length * 50);
+    }, question.text.length * 24);
   };
 
   const handleAnswer = (option: string) => {
@@ -274,11 +274,11 @@ export default function Chat({ onNavigate }: ChatProps) {
             typewriterTimeoutRef.current = setTimeout(() => {
               setMessages(prev => prev.map((msg, idx) => idx === prev.length - 1 ? { ...msg, isTyping: false } : msg));
               setTimeout(() => setShowOptions(true), 300);
-            }, finalMessage.text.length * 50);
+            }, finalMessage.text.length * 24);
           }, 1000);
         }
-      }, responseText.length * 50);
-    }, 1500);
+      }, responseText.length * 24);
+    }, 600);
   };
 
   const handleViewPlan = () => {
@@ -407,7 +407,7 @@ function TypewriterText({ text }: { text: string }) {
       const timeout = setTimeout(() => {
         setDisplayText(prev => prev + text[currentIndex]);
         setCurrentIndex(prev => prev + 1);
-      }, 50);
+      }, 24);
 
       return () => clearTimeout(timeout);
     }
@@ -415,3 +415,5 @@ function TypewriterText({ text }: { text: string }) {
 
   return <span>{displayText}<span className="cursor">▋</span></span>;
 }
+
+

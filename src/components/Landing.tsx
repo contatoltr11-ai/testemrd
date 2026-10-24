@@ -14,16 +14,19 @@ export default function Landing({ onNavigate }: LandingProps) {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             const utms: Record<string, string> = {};
+
             const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
             utmParams.forEach(param => {
                 const value = urlParams.get(param);
                 if (value) utms[param] = value;
             });
+
             const clickIds = ['fbclid', 'gclid', 'ttclid'];
             clickIds.forEach(param => {
                 const value = urlParams.get(param);
                 if (value) utms[param] = value;
             });
+
             if (Object.keys(utms).length > 0) {
                 localStorage.setItem('quiz_utms', JSON.stringify(utms));
                 console.log('✅ UTMs capturadas:', utms);
@@ -36,248 +39,471 @@ export default function Landing({ onNavigate }: LandingProps) {
     };
 
     useEffect(() => {
+        // ✅ CAPTURA UTMs ASSIM QUE A PÁGINA CARREGA
         captureUTMs();
+
+        // Removido: tracking.pageView (gerenciado pelo Utmify)
         ga4Tracking.landingPageView();
+
+        // Removido: scrollObserver (não necessário)
     }, []);
 
     const handleCTAClick = () => {
+        // Removido: tracking.ctaClicked (gerenciado pelo Utmify)
         ga4Tracking.landingCTAClick();
         onNavigate('chat');
     };
+
+    // 📰 Data dinâmica em espanhol — atualiza sozinha a cada acesso
+    const fechaHoy = new Date().toLocaleDateString('es-ES', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
 
     return (
         <div className="landing-container">
             <div className="matrix-bg"></div>
             <div className="scanlines"></div>
+
             <div className="content-wrapper">
-                <main className="landing-main-simple">
-                    {/* 1. HEADLINE — copy que converte, com hierarquia visual refinada */}
-                    <h1 className="hero-headline">
-                        <span className="headline-primary">
-                            Crees que ser un hombre 'bueno, paciente y comprensivo'
-                            <span className="highlight-orange"> es lo que la traerá de vuelta?</span>
-                        </span>
-                        <span className="headline-secondary">
-                            Sí, eso es exactamente lo que el hombre que ella dejó de desear piensa
-                            mientras ve <span className="highlight-orange">cómo su propia relación se muere</span>.
-                        </span>
-                    </h1>
+                <article className="article-frame">
 
-                    {/* 2. SUB — o que ele vai descobrir */}
-                    <p className="hero-sub">
-                        Responde 7 preguntas y te digo el <strong>próximo paso exacto</strong> para que ella vuelva a verte.
-                    </p>
-
-                    {/* 3. CTA — o motor de conversão (urgência de tempo) */}
-                    <div className="cta-section">
-                        <button className="cta-button" onClick={handleCTAClick}>
-                            <span className="cta-glow"></span>
-                            <span className="cta-icon">⏰</span>
-                            <span className="cta-text">DESCUBRIR SI AÚN HAY TIEMPO</span>
-                        </button>
-                        <p className="cta-micro">Haz el test rápido — 2 minutos y esto puede cambiar tu caso.</p>
+                    {/* 1. TAG DE CATEGORIA + DATA DINÂMICA */}
+                    <div className="news-bar">
+                        <span className="news-category">Psicología Conductual · Relaciones</span>
+                        <span className="news-date">{fechaHoy}</span>
                     </div>
-                </main>
 
-                {/* 4. FOOTER — segurança */}
-                <footer className="landing-footer">
-                    <p className="disclaimer">🔒 100% anónimo • Sin juicio • Sin email</p>
-                </footer>
+                    <main className="landing-main">
+
+                        {/* ============================================
+                            ZONA DA DOBRA — fluxo compacto, sem esticamento
+                            Ordem: manchete → byline → frescor → parágrafo → CTA
+                            FIX: sem min-height e sem margin-top:auto —
+                            o botão fica a 16px do parágrafo
+                            ============================================ */}
+                        <div className="fold-stack">
+
+                            {/* 2. MANCHETE — bicolor */}
+                            <h1 className="hero-headline">
+                                Cada día que pasa, tu ex recuerda{' '}
+                                <span className="accent">un poco menos de ti</span>.
+                            </h1>
+
+                            {/* 3. BYLINE — autoridade em 1 linha */}
+                            <p className="hero-byline">
+                                Por <strong>Sophia Sanchez</strong>, especialista en reconquista de pareja
+                            </p>
+
+                            {/* 4. LINHA DE FRESCOR */}
+                            <p className="hero-fresh">Actualizado hoy</p>
+
+                            {/* 5. PARÁGRAFO CURTO — escada para o mecanismo */}
+                            <p className="hero-sub">
+                                Y cuando ella deja de recordar, deja de extrañarte. Descubre la{' '}
+                                <strong>Ventana Neuroquímica de 72 Horas</strong> que decide si ella
+                                te va a recibir… <em>o te va a olvidar para siempre.</em>
+                            </p>
+
+                            {/* 6. CTA — imediatamente após o parágrafo (vão 16px) */}
+                            <div className="cta-block">
+                                <button className="hero-cta" onClick={handleCTAClick}>
+                                    QUIERO RECUPERAR A MI EX →
+                                </button>
+                                <p className="hero-safety">
+                                    Tarda menos de 2 minutos. Gratis y anónimo.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {/* ============================================
+                            ABAIXO DA DOBRA — nada é deletado, só desce
+                            ============================================ */}
+
+                        {/* 7. MICRO-LINHA DE IMPACTO — vão do microcopy: 36px */}
+                        <p className="timing-hook">
+                            No fue falta de amor. <strong>Fue falta de timing.</strong>
+                        </p>
+
+                        {/* 8. CAIXA DA ESPECIALISTA — intacta, borda vermelha */}
+                        <div className="article-box">
+                            <p className="article-box-title">
+                                <span className="article-box-tag">Psicología Conductual, Relaciones:</span>{' '}
+                                <strong>Sophia Sanchez, especialista en reconquista</strong>, presenta
+                                la metodología sobre comportamiento femenino que ya ha ayudado a más
+                                de <span className="article-box-accent">9.000 hombres</span> a
+                                recuperar a su pareja.
+                            </p>
+                        </div>
+
+                        {/* 9. PROVA SOCIAL — frase-selo única */}
+                        <p className="proof-strip">
+                            <strong>Más de 9.000</strong> hombres ya hicieron la lectura de
+                            escenario antes de mandar el próximo mensaje.
+                        </p>
+
+                        {/* 10. LINHA DE ASSINATURA */}
+                        <p className="hero-tagline">
+                            Claridad antes del mensaje. Estrategia antes de la insistencia.
+                        </p>
+
+                    </main>
+                </article>
             </div>
 
+            {/* CSS INLINE */}
             <style jsx="true">{`
                 .landing-container {
                     min-height: 100vh;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    /* FIX: flex-start evita clip de conteúdo centralizado
+                       quando a página passa da dobra */
+                    justify-content: flex-start;
                     position: relative;
-                    background: #000;
+                    background: #fff;
                     overflow: hidden;
                 }
+
                 .matrix-bg {
                     position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                     z-index: 0;
                 }
+
                 .scanlines {
                     position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                     z-index: 1;
                     pointer-events: none;
                 }
+
                 .content-wrapper {
                     position: relative;
                     z-index: 2;
                     width: 100%;
-                    max-width: 760px;
-                    padding: 2rem 2rem 1rem;
+                    max-width: 800px;
+                    padding: 0;
                 }
-                .landing-main-simple {
+
+                /* FIX: sem min-height — a altura é a do conteúdo.
+                   O fundo branco de tela cheia fica garantido pelo
+                   .landing-container (background #fff + min-height 100vh) */
+                .article-frame {
+                    background: #fff;
+                    width: 100%;
+                    max-width: 560px;
+                    margin: 0 auto;
+                    padding: 1rem 1.4rem 1.6rem;
+                }
+
+                /* 1. TAG + DATA */
+                .news-bar {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                    padding: 0.65rem 0;
+                    border-bottom: 1px solid rgba(17, 24, 39, 0.12);
+                    margin-bottom: 0.9rem;
+                }
+
+                .news-category {
+                    font-size: 0.65rem;
+                    font-weight: 700;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    color: rgba(17, 24, 39, 0.6);
+                }
+
+                .news-date {
+                    font-size: 0.67rem;
+                    color: rgba(17, 24, 39, 0.45);
+                }
+
+                .landing-main {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    justify-content: center;
                     text-align: center;
-                    gap: 1.75rem;
-                    min-height: 72vh;
                 }
 
-                /* ===== HEADLINE — hierarquia por tamanho + opacidade ===== */
-                .hero-headline {
+                /* ============================================
+                   ZONA DA DOBRA — fluxo natural, sem esticamento
+                   (classe renomeada: CSS antigo não encontra alvo)
+                   ============================================ */
+                .fold-stack {
+                    width: 100%;
+                    max-width: 460px;
                     display: flex;
                     flex-direction: column;
-                    gap: 0.9rem;
-                    max-width: 680px;
-                    margin: 0;
-                }
-                .headline-primary {
-                    font-size: 1.9rem;
-                    line-height: 1.28;
-                    font-weight: 800;
-                    color: #fff;
-                    letter-spacing: -0.3px;
-                }
-                .headline-secondary {
-                    font-size: 1.05rem;
-                    line-height: 1.5;
-                    font-weight: 600;
-                    color: rgba(255, 255, 255, 0.82);
-                }
-                .highlight-orange {
-                    background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    font-weight: 800;
+                    align-items: center;
+                    gap: 1rem;
                 }
 
-                /* ===== SUB ===== */
-                .hero-sub {
-                    font-size: 1.1rem;
-                    line-height: 1.55;
-                    color: rgba(255, 255, 255, 0.78);
-                    max-width: 520px;
-                    margin: 0;
+                /* 2. MANCHETE — serifada, bicolor */
+                .hero-headline {
+                    font-family: Georgia, 'Times New Roman', serif;
+                    font-size: 1.45rem;
+                    line-height: 1.25;
+                    color: #111827;
+                    font-weight: 700;
+                    letter-spacing: -0.3px;
+                    margin: 0.4rem 0 0;
                 }
-                .hero-sub strong {
-                    color: #fff;
+
+                .hero-headline .accent {
+                    color: #dc2626;
+                }
+
+                /* 3. BYLINE — autoridade em 1 linha */
+                .hero-byline {
+                    font-size: 0.78rem;
+                    line-height: 1.4;
+                    color: rgba(17, 24, 39, 0.68);
+                    margin: 0;
+                    max-width: 340px;
+                }
+
+                .hero-byline strong {
+                    color: #111827;
                     font-weight: 700;
                 }
 
-                /* ===== CTA — urgência (vermelho + relógio + pulso) ===== */
-                .cta-section {
+                /* 4. FRESCOR — pontinho verde ao vivo */
+                .hero-fresh {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.35rem;
+                    font-size: 0.66rem;
+                    font-weight: 600;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: rgba(17, 24, 39, 0.5);
+                    margin: 0;
+                }
+
+                .hero-fresh::before {
+                    content: '';
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #16a34a;
+                    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+                    flex-shrink: 0;
+                }
+
+                /* 5. PARÁGRAFO CURTO */
+                .hero-sub {
+                    font-size: 0.92rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.75);
+                    margin: 0;
+                    max-width: 420px;
+                }
+
+                .hero-sub strong {
+                    color: #111827;
+                }
+
+                /* 6. CTA — FIX: sem margin-top:auto e sem padding-top.
+                   O vão parágrafo→botão é o gap de 1rem (16px) do .fold-stack */
+                .cta-block {
+                    width: 100%;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 0.6rem;
-                    width: 100%;
+                    gap: 0.5rem;
                 }
-                .cta-button {
-                    background: linear-gradient(135deg, #ff3b3b 0%, #ff6b6b 100%);
+
+                .hero-cta {
+                    background: #dc2626;
                     color: #fff;
                     border: none;
-                    border-radius: 16px;
-                    padding: 1.4rem 2.5rem;
-                    font-size: 1.25rem;
+                    border-radius: 10px;
+                    min-height: 48px;
+                    padding: 15px 28px;
+                    font-size: 1rem;
                     font-weight: 700;
                     text-transform: uppercase;
-                    letter-spacing: 0.8px;
+                    letter-spacing: 0.5px;
                     cursor: pointer;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 8px 24px rgba(255, 59, 59, 0.4);
-                    position: relative;
-                    overflow: hidden;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 0.8rem;
-                    min-width: min(90%, 560px);
-                    z-index: 1;
+                    transition: all 0.25s ease;
+                    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35);
+                    width: 100%;
+                    max-width: 420px;
+                    text-align: center;
+                    line-height: 1.3;
                     animation: pulse-cta 2s ease-in-out infinite;
                 }
+
                 @keyframes pulse-cta {
                     0%, 100% {
                         transform: scale(1);
-                        box-shadow: 0 8px 24px rgba(255, 59, 59, 0.4);
+                        box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35);
                     }
                     50% {
-                        transform: scale(1.04);
-                        box-shadow: 0 12px 32px rgba(255, 59, 59, 0.7);
+                        transform: scale(1.03);
+                        box-shadow: 0 12px 32px rgba(220, 38, 38, 0.55);
                     }
                 }
-                .cta-button:hover {
-                    transform: translateY(-3px) scale(1.04);
-                    box-shadow: 0 12px 32px rgba(255, 59, 59, 0.6);
+
+                .hero-cta:hover {
+                    transform: translateY(-2px) scale(1.03);
+                    box-shadow: 0 12px 32px rgba(220, 38, 38, 0.55);
                     animation: none;
                 }
-                .cta-button:active {
+
+                .hero-cta:active {
                     transform: translateY(-1px) scale(1.02);
                 }
-                .cta-icon {
-                    font-size: 1.7rem;
-                    position: relative;
-                    z-index: 2;
-                    animation: tick 1.6s ease-in-out infinite;
-                }
-                @keyframes tick {
-                    0%, 100% { transform: rotate(0deg) scale(1); }
-                    50% { transform: rotate(-6deg) scale(1.08); }
-                }
-                .cta-text {
-                    position: relative;
-                    z-index: 2;
-                }
-                .cta-glow {
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                    animation: glow-slide 3s infinite;
-                    z-index: 1;
-                }
-                @keyframes glow-slide {
-                    0% { transform: translateX(-100%); }
-                    100% { transform: translateX(100%); }
-                }
-                .cta-micro {
-                    font-size: 0.9rem;
-                    color: rgba(255, 255, 255, 0.55);
+
+                .hero-safety {
+                    font-size: 0.75rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.5);
                     margin: 0;
                 }
 
-                /* ===== FOOTER ===== */
-                .landing-footer {
+                /* ============================================
+                   ABAIXO DA DOBRA
+                   ============================================ */
+
+                /* 7. MICRO-LINHA DE IMPACTO — vão do microcopy: 2.25rem (36px) */
+                .timing-hook {
+                    font-family: Georgia, 'Times New Roman', serif;
+                    font-style: italic;
+                    font-size: 1.02rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.85);
+                    margin: 2.25rem 0 0;
                     text-align: center;
-                    padding: 1.5rem 0 0.5rem;
-                }
-                .disclaimer {
-                    font-size: 0.85rem;
-                    color: rgba(255, 255, 255, 0.5);
-                    margin: 0;
                 }
 
-                /* ===== RESPONSIVO ===== */
-                @media (max-width: 768px) {
-                    .content-wrapper { padding: 1.5rem 1.25rem 0.5rem; }
-                    .landing-main-simple { gap: 1.5rem; min-height: auto; }
-                    .headline-primary { font-size: 1.6rem; }
-                    .headline-secondary { font-size: 0.98rem; }
-                    .cta-button { padding: 1.25rem 1.75rem; font-size: 1.1rem; min-width: 100%; }
+                .timing-hook strong {
+                    color: #111827;
+                    font-style: normal;
                 }
-                @media (max-width: 480px) {
-                    .headline-primary { font-size: 1.42rem; }
-                    .headline-secondary { font-size: 0.92rem; }
-                    .hero-sub { font-size: 1rem; }
-                    .cta-button {
-                        padding: 1.1rem 1.25rem;
-                        font-size: 1rem;
-                        flex-direction: column;
-                        gap: 0.4rem;
+
+                /* 8. CAIXA DA ESPECIALISTA */
+                .article-box {
+                    width: 100%;
+                    max-width: 460px;
+                    background: #f4f4f5;
+                    border: 1px solid rgba(17, 24, 39, 0.1);
+                    border-left: 3px solid #dc2626;
+                    border-radius: 6px;
+                    padding: 0.95rem 1.05rem;
+                    margin-top: 1rem;
+                    text-align: left;
+                }
+
+                .article-box-title {
+                    margin: 0;
+                    font-family: Georgia, 'Times New Roman', serif;
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                    color: #111827;
+                }
+
+                .article-box-tag {
+                    font-weight: 700;
+                }
+
+                .article-box-accent {
+                    color: #dc2626;
+                    font-weight: 700;
+                }
+
+                /* 9. PROVA SOCIAL — frase-selo única */
+                .proof-strip {
+                    display: block;
+                    width: 100%;
+                    max-width: 430px;
+                    border-top: 1px solid rgba(17, 24, 39, 0.1);
+                    border-bottom: 1px solid rgba(17, 24, 39, 0.1);
+                    padding: 0.85rem 0.5rem;
+                    margin: 1.2rem 0 0;
+                    text-align: center;
+                    font-size: 0.88rem;
+                    line-height: 1.55;
+                    color: rgba(17, 24, 39, 0.75);
+                }
+
+                .proof-strip strong {
+                    color: #dc2626;
+                    font-weight: 700;
+                }
+
+                /* 10. LINHA DE ASSINATURA */
+                .hero-tagline {
+                    font-size: 0.75rem;
+                    line-height: 1.5;
+                    color: rgba(17, 24, 39, 0.45);
+                    margin: 1.1rem 0 0.4rem;
+                    text-align: center;
+                }
+
+                /* RESPONSIVO */
+                @media (max-width: 768px) {
+                    .article-frame {
+                        padding: 0.9rem 1.15rem 1.4rem;
                     }
-                    .cta-icon { font-size: 1.5rem; }
+
+                    .hero-headline {
+                        font-size: 1.32rem;
+                    }
+
+                    .hero-sub {
+                        font-size: 0.9rem;
+                    }
+                }
+
+                /* iPhone SE / 360px — dobra compacta sem scroll */
+                @media (max-width: 380px) {
+                    .article-frame {
+                        padding: 0.8rem 1rem 1.2rem;
+                    }
+
+                    .news-bar {
+                        padding: 0.55rem 0;
+                        margin-bottom: 0.75rem;
+                    }
+
+                    .fold-stack {
+                        gap: 0.85rem;
+                    }
+
+                    .hero-headline {
+                        font-size: 1.18rem;
+                    }
+
+                    .hero-byline {
+                        font-size: 0.73rem;
+                    }
+
+                    .hero-sub {
+                        font-size: 0.85rem;
+                        line-height: 1.45;
+                    }
+
+                    .timing-hook {
+                        margin-top: 2rem;
+                    }
+
+                    .hero-cta {
+                        padding: 13px 18px;
+                        font-size: 0.95rem;
+                    }
                 }
             `}</style>
         </div>

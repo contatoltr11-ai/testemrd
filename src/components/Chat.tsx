@@ -48,7 +48,7 @@ const BASE_PROGRESS = 14;                // barra já abre preenchida
 const QUESTIONS: Question[] = [
   {
     id: 2,
-    text: 'Entendido. Ahora, ¿cuánto tiempo ha pasado desde que se separaron?',
+    text: 'Ahora, ¿cuánto tiempo ha pasado desde que se separaron?',
     options: ['MENOS DE 1 SEMANA', '1-4 SEMANAS', '1-6 MESES', 'MÁS DE 6 MESES'],
     response: 'Registrado.',
     responseByOption: {

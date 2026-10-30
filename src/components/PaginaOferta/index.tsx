@@ -29,15 +29,37 @@ export default function PaginaOferta({
 
     // Detecta o cenário do lead com base no quizData (regra exata)
     const detectScenario = (): 'contacto_cero' | 'con_otro' | 'bloqueo' | 'ruptura_reciente' => {
-        if (quizData.currentSituation === 'CONTACTO CERO') return 'contacto_cero';
+        // PRIORIDAD 1: Bloqueo (barrera objetiva, no hay contacto posible)
         if (quizData.currentSituation === 'BLOQUEADO') return 'bloqueo';
+
+        // PRIORIDAD 2: Canal abierto = vínculo activo.
+        // Vence al exSituation: si él todavía habla con ella, eso importa más
+        // que el hecho de que ella esté saliendo con alguien.
+        if (
+            quizData.currentSituation === 'SOMOS AMIGOS' ||
+            quizData.currentSituation === 'HABLAMOS A VECES' ||
+            quizData.currentSituation === 'ENCUENTROS ÍNTIMOS'
+        ) return 'ruptura_reciente';
+
+        // PRIORIDAD 3: Ex-pareja con otra persona (información más fuerte del quiz)
         if (
             quizData.exSituation === 'RELACIÓN SERIA' ||
             quizData.exSituation === 'SALIENDO CASUAL' ||
             quizData.exSituation === 'VARIAS PERSONAS'
         ) return 'con_otro';
+
+        // PRIORIDAD 4: Sin contacto o contacto frío
+        if (
+            quizData.currentSituation === 'CONTACTO CERO' ||
+            quizData.currentSituation === 'ME IGNORA' ||
+            quizData.currentSituation === 'SÓLO TEMAS NECESARIOS'
+        ) return 'contacto_cero';
+
+        // PRIORIDAD 5: Separación reciente (por tiempo)
         if (quizData.timeSeparation === 'MENOS DE 1 SEMANA') return 'ruptura_reciente';
-        return 'ruptura_reciente';
+
+        // Fallback seguro: contacto cero (nunca contradice al lead)
+        return 'contacto_cero';
     };
 
     const scenario = detectScenario();
@@ -200,7 +222,7 @@ export default function PaginaOferta({
                     
                     {/* Foto 2 - COLE O LINK DA SEGUNDA IMAGEM NO src="" */}
                     <img 
-                        src="https://i.ibb.co/Z1KkPxC9/02-feliz.webp" 
+                        src="https://i.ibb.co/W4BCwz0R/02-feliz.webp" 
                         alt="Casal reconciliado - Foto 2" 
                         style={{
                             width: '100%',
@@ -706,7 +728,7 @@ export default function PaginaOferta({
                                         fontSize: 'clamp(0.95rem, 3.8vw, 1.15rem)',
                                         color: '#10b981'
                                     }}>
-                                        Antonio S.
+                                        Pablo S.
                                     </strong>
                                     <span style={{
                                         fontSize: 'clamp(0.7rem, 2.8vw, 0.8rem)',

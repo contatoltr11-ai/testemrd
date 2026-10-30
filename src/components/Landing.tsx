@@ -47,8 +47,6 @@ export default function Landing({ onNavigate }: LandingProps) {
 
     return (
         <div className="landing-container">
-            <div className="matrix-bg"></div>
-            <div className="scanlines"></div>
             <div className="content-wrapper">
                 <main className="landing-main-simple">
                     {/* 1. HEADLINE — copy que converte, com hierarquia visual refinada */}
@@ -95,57 +93,6 @@ export default function Landing({ onNavigate }: LandingProps) {
                     background: #000;
                     overflow: hidden;
                 }
-
-                /* ============================================================
-                   ✅ MATRIX BG — grade digital + brilho verde radial
-                   ============================================================ */
-                .matrix-bg {
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    z-index: 0;
-                    pointer-events: none;
-                    background-image:
-                        linear-gradient(rgba(16, 185, 129, 0.07) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(16, 185, 129, 0.07) 1px, transparent 1px),
-                        radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.18) 0%, transparent 60%),
-                        radial-gradient(ellipse at 50% 100%, rgba(255, 140, 0, 0.08) 0%, transparent 55%);
-                    background-size: 48px 48px, 48px 48px, 100% 100%, 100% 100%;
-                    animation: matrix-drift 24s linear infinite;
-                }
-                @keyframes matrix-drift {
-                    0%   { background-position: 0 0, 0 0, 50% 0%, 50% 100%; }
-                    100% { background-position: 0 48px, 48px 0, 50% 0%, 50% 100%; }
-                }
-
-                /* ============================================================
-                   ✅ SCANLINES — linhas CRT + vinheta
-                   ============================================================ */
-                .scanlines {
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    z-index: 1;
-                    pointer-events: none;
-                    background:
-                        repeating-linear-gradient(
-                            to bottom,
-                            transparent 0px,
-                            transparent 2px,
-                            rgba(0, 0, 0, 0.22) 3px,
-                            transparent 4px
-                        ),
-                        radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.75) 100%);
-                    opacity: 0.55;
-                    animation: scanline-flicker 8s ease-in-out infinite;
-                }
-                @keyframes scanline-flicker {
-                    0%, 100% { opacity: 0.55; }
-                    48%      { opacity: 0.55; }
-                    50%      { opacity: 0.62; }
-                    52%      { opacity: 0.55; }
-                }
-
                 .content-wrapper {
                     position: relative;
                     z-index: 2;
@@ -177,7 +124,6 @@ export default function Landing({ onNavigate }: LandingProps) {
                     font-weight: 800;
                     color: #fff;
                     letter-spacing: -0.3px;
-                    text-shadow: 0 0 24px rgba(16, 185, 129, 0.25);
                 }
                 .headline-secondary {
                     font-size: 1.05rem;
@@ -319,13 +265,6 @@ export default function Landing({ onNavigate }: LandingProps) {
                         letter-spacing: 0.3px;
                     }
                     .cta-icon { font-size: 1.3rem; }
-                }
-
-                /* ===== PERFORMANCE / ACESSIBILIDADE ===== */
-                @media (prefers-reduced-motion: reduce) {
-                    .matrix-bg, .scanlines, .cta-button, .cta-icon, .cta-glow {
-                        animation: none !important;
-                    }
                 }
             `}</style>
         </div>

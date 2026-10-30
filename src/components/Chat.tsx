@@ -18,16 +18,8 @@ interface Message {
 interface Question {
   id: number;
   text: string;
-  options?: string[];
-  optionsByGender?: {
-    HOMBRE: string[];
-    MUJER: string[];
-  };
+  options: string[];
   response: string;
-  responseByGender?: {
-    HOMBRE: string;
-    MUJER: string;
-  };
   responseByOption?: {
     [option: string]: string;
   };
@@ -37,14 +29,20 @@ interface Question {
 // ========================================
 // ✅ CONSTANTES DE VELOCIDADE E PROGRESSO
 // ========================================
-const TYPE_SPEED = 22;                  // ms por caractere (era 24)
-const DELAY_BEFORE_RESPONSE = 150;       // era 600
-const DELAY_BEFORE_NEXT_QUESTION = 200;  // era 800
-const DELAY_SHOW_OPTIONS = 100;          // era 300
-const DELAY_BEFORE_FINAL = 300;          // era 1000
-const BASE_PROGRESS = 14;                // barra já abre preenchida
+const TYPE_SPEED = 22;                  // ms por caractere
+const DELAY_BEFORE_RESPONSE = 150;
+const DELAY_BEFORE_NEXT_QUESTION = 200;
+const DELAY_SHOW_OPTIONS = 100;
+const DELAY_BEFORE_FINAL = 300;
+const BASE_PROGRESS = 14;
 
-// Pergunta de gênero removida: público 100% masculino.
+// ========================================
+// ✅ CHAT 100% MASCULINO
+// Lead: homem reconquistando uma mulher.
+// Pergunta de gênero removida. Opções e respostas
+// já fixas no masculino — sem optionsByGender,
+// sem responseByGender, sem variantes /o.
+// ========================================
 const QUESTIONS: Question[] = [
   {
     id: 2,
@@ -62,14 +60,10 @@ const QUESTIONS: Question[] = [
   {
     id: 3,
     text: 'Bien. ¿Y cómo fue la separación? ¿Quién tomó la iniciativa?',
-    optionsByGender: {
-      HOMBRE: ['ELLA TERMINÓ', 'YO TERMINÉ', 'DECISIÓN MUTUA'],
-      MUJER: ['ÉL TERMINÓ', 'YO TERMINÉ', 'DECISIÓN MUTUA']
-    },
+    options: ['ELLA TERMINÓ', 'YO TERMINÉ', 'DECISIÓN MUTUA'],
     response: 'Entendido. Esto cambia el mapa de la estrategia.',
     responseByOption: {
       'ELLA TERMINÓ': 'Entiendo. Cuando ella toma la decisión de terminar, algo activó un "switch" emocional en su cerebro: ella ya procesó la ruptura antes de decírtelo. La buena noticia: ese switch puede revertirse si tocas la memoria emocional correcta. Vamos a usar eso.',
-      'ÉL TERMINÓ': 'Entiendo. Cuando él toma la decisión de terminar, la dinámica es distinta: actúa desde el impulso o el cansancio, no desde un proceso previo. Eso deja una puerta abierta que vamos a aprovechar.',
       'YO TERMINÉ': 'Interesante. Cuando tú terminaste, ella activó un mecanismo de defensa: siente que fue rechazada, y eso la vuelve resistente a cualquier acercamiento directo. Vamos a revertir esa defensa antes de intentar cualquier contacto.',
       'DECISIÓN MUTUA': 'Entiendo. La decisión mutua es el escenario más delicado: no hay un "rechazo" que active la memoria emocional, y sin eso no hay anclaje. Vamos a crear ese anclaje estratégicamente.'
     },
@@ -79,36 +73,24 @@ const QUESTIONS: Question[] = [
     id: 4,
     text: 'Registrado. ¿Por cuánto tiempo estuvieron juntos?',
     options: ['MENOS DE 6 MESES', '6 MESES-1 AÑO', '1-3 AÑOS', 'MÁS DE 3 AÑOS'],
-    response: 'Registrado. Cada detalle cuenta.',
-    responseByGender: {
-      HOMBRE: 'Perfecto. El tiempo de relación define cuántas "anclas emocionales" creaste en su memoria. Cuanto más tiempo juntos, más profundas las conexiones neuronales. Eso trabaja a tu favor si usas el protocolo correcto.',
-      MUJER: 'Perfecto. El tiempo de relación define cuántas "anclas emocionales" creaste en su memoria. Cuanto más tiempo juntos, más profundas las conexiones neuronales. Eso trabaja a tu favor si usas el protocolo correcto.'
-    },
+    response: 'Registrado. Cada detalle cuenta. Perfecto. El tiempo de relación define cuántas "anclas emocionales" creaste en su memoria. Cuanto más tiempo juntos, más profundas las conexiones neuronales. Eso trabaja a tu favor si usas el protocolo correcto.',
     dataKey: 'relationshipDuration',
   },
   {
     id: 5,
     text: '¿Cuál es tu situación actual con tu ex-pareja?',
     options: ['CONTACTO CERO', 'ME IGNORA', 'BLOQUEADO', 'SÓLO TEMAS NECESARIOS', 'HABLAMOS A VECES', 'SOMOS AMIGOS', 'ENCUENTROS ÍNTIMOS'],
-    response: 'Registrado. Esto es clave.',
-    responseByGender: {
-      HOMBRE: 'Información clave. El nivel de contacto actual revela exactamente en qué fase emocional está ella. Cada escenario requiere un protocolo diferente. Si hay contacto cero, usamos una estrategia. Si hay comunicación, usamos otra completamente distinta.',
-      MUJER: 'Información clave. El nivel de contacto actual revela exactamente en qué fase emocional está él. Cada escenario requiere un protocolo diferente. Si hay contacto cero, usamos una estrategia. Si hay comunicación, usamos otra completamente distinta.'
-    },
+    response: 'Registrado. Esto es clave. Información clave. El nivel de contacto actual revela exactamente en qué fase emocional está ella. Cada escenario requiere un protocolo diferente. Si hay contacto cero, usamos una estrategia. Si hay comunicación, usamos otra completamente distinta.',
     dataKey: 'currentSituation',
   },
   {
     id: 6,
     text: 'Ahora, una información crucial: ¿tu ex-pareja ya está con otra persona?',
-    optionsByGender: {
-      HOMBRE: ['ESTÁ SOLTERA', 'NO ESTOY SEGURO', 'SALIENDO CASUAL', 'RELACIÓN SERIA', 'VARIAS PERSONAS'],
-      MUJER: ['ESTÁ SOLTERO', 'NO ESTOY SEGURO', 'SALIENDO CASUAL', 'RELACIÓN SERIA', 'VARIAS PERSONAS']
-    },
+    options: ['ESTÁ SOLTERA', 'NO ESTOY SEGURO', 'SALIENDO CASUAL', 'RELACIÓN SERIA', 'VARIAS PERSONAS'],
     response: 'Crucial. Esto define la ruta que vamos a tomar.',
     responseByOption: {
       'ESTÁ SOLTERA': 'Mejor todavía. Si ella está soltera, hay una ventana de oportunidad abierta ahora mismo: el cerebro en soledad busca referencia emocional en el pasado. Vamos a ocupar ese espacio antes de que se cierre.',
-      'ESTÁ SOLTERO': 'Mejor todavía. Si él está soltero, hay una ventana de oportunidad abierta ahora mismo: el cerebro en soledad busca referencia emocional en el pasado. Vamos a ocupar ese espacio antes de que se cierre.',
-      'NO ESTOY SEGURO': 'No importa. Vamos a blindar tu plan para los dos escenarios: la estrategia que funciona si está con alguien también funciona si está soltera/o. Nada queda al azar.',
+      'NO ESTOY SEGURO': 'No importa. Vamos a blindar tu plan para los dos escenarios: la estrategia que funciona si está con alguien también funciona si está soltera. Nada queda al azar.',
       'SALIENDO CASUAL': 'Entendido. Si está saliendo casualmente, no hay vínculo consolidado. Vamos a usar la comparación emocional sin presionar, y eso juega a tu favor.',
       'RELACIÓN SERIA': 'Entendido. Si hay una relación seria, la estrategia no es competir: es activar la memoria emocional de lo que tenía contigo. Eso es más efectivo que cualquier confrontación.',
       'VARIAS PERSONAS': 'Entendido. Si está con varias personas, hay una búsqueda activa de algo que no encontró. Ahí es donde entras tú — y vamos a posicionarte exactamente en ese hueco.'
@@ -118,15 +100,8 @@ const QUESTIONS: Question[] = [
   {
     id: 7,
     text: 'Última pregunta para finalizar el análisis: en una escala de 1 a 4, ¿cuánto quieres recuperar esta relación?',
-    optionsByGender: {
-      HOMBRE: ['1 - NO ESTOY SEGURO', '2 - LO ESTOY CONSIDERANDO', '3 - LO QUIERO MUCHO', '4 - LO QUIERO CON TODA MI ALMA'],
-      MUJER: ['1 - NO ESTOY SEGURA', '2 - LO ESTOY CONSIDERANDO', '3 - LO QUIERO MUCHO', '4 - LO QUIERO CON TODA MI ALMA']
-    },
-    response: '¡Análisis completo!',
-    responseByGender: {
-      HOMBRE: '¡Análisis completo! Tu nivel de compromiso define la intensidad del protocolo. Cuanto más comprometido estés, más poderosas serán las técnicas que voy a revelarte. Ahora tengo todo lo que necesito para mostrarte el camino exacto para reconquistar a ella.',
-      MUJER: '¡Análisis completo! Tu nivel de compromiso define la intensidad del protocolo. Cuanto más comprometida estés, más poderosas serán las técnicas que voy a revelarte. Ahora tengo todo lo que necesito para mostrarte el camino exacto para reconquistar a él.'
-    },
+    options: ['1 - NO ESTOY SEGURO', '2 - LO ESTOY CONSIDERANDO', '3 - LO QUIERO MUCHO', '4 - LO QUIERO CON TODA MI ALMA'],
+    response: '¡Análisis completo! Tu nivel de compromiso define la intensidad del protocolo. Cuanto más comprometido estés, más poderosas serán las técnicas que voy a revelarte. Ahora tengo todo lo que necesito para mostrarte el camino exacto para reconquistar a ella.',
     dataKey: 'commitmentLevel',
   }
 ];
@@ -150,7 +125,6 @@ export default function Chat({ onNavigate }: ChatProps) {
       if (storedUTMs) {
         const utms = JSON.parse(storedUTMs);
         console.log('✅ UTMs preservadas no Chat:', utms);
-        // Sincroniza com Utmify se disponível
         if (window.location.search === '' && Object.keys(utms).length > 0) {
           const utmString = Object.entries(utms)
             .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
@@ -170,7 +144,7 @@ export default function Chat({ onNavigate }: ChatProps) {
   // ✅ GARANTE gender = 'HOMBRE' NO STORAGE
   // ========================================
   // Sem a pergunta de gênero, quizData.gender ficaria '' e o
-  // contentByGender.getCopy cairia no pronome masculino errado.
+  // contentByGender.getCopy cairia no pronome errado.
   // Isso grava 'HOMBRE' antes de qualquer página consumir o dado.
   const ensureGender = () => {
     try {
@@ -185,17 +159,15 @@ export default function Chat({ onNavigate }: ChatProps) {
   };
 
   useEffect(() => {
-    // ✅ GARANTE QUE AS UTMs ESTEJAM PRESERVADAS
     ensureUTMs();
-    // ✅ GARANTE O GÊNERO PARA TODAS AS PÁGINAS A JUSANTE
     ensureGender();
-    // Removido: tracking.pageView (gerenciado pelo Utmify)
     ga4Tracking.chatPageView();
     ga4Tracking.chatStarted();
 
+    // ✅ APRESENTAÇÃO DA SOPHIA (autoridade + promessa)
     const initialMessage: Message = {
       type: 'bot',
-      text: 'Hola, soy Sophia. Voy a hacerte 6 preguntas rápidas para armar tu plan. Menos de 2 minutos.',
+      text: 'Hola, soy Sophia Sanchez, especialista en reconquista y psicología conductual. Voy a hacerte 6 preguntas para armar tu plan.',
       isTyping: true,
     };
     setMessages([initialMessage]);
@@ -254,7 +226,6 @@ export default function Chat({ onNavigate }: ChatProps) {
     quizData[question.dataKey] = option;
     storage.saveQuizData(quizData);
 
-    // Removido: tracking.questionAnswered (gerenciado pelo Utmify)
     ga4Tracking.questionAnswered(question.id, question.text, option);
 
     const stepSize = (100 - BASE_PROGRESS) / QUESTIONS.length;
@@ -264,12 +235,9 @@ export default function Chat({ onNavigate }: ChatProps) {
     setTimeout(() => {
       setIsProcessing(false);
 
-      // Prioriza resposta por opção escolhida; cai para gênero; cai para padrão
+      // Resposta por opção escolhida; fallback para a resposta padrão
       const responseText =
         (question.responseByOption && question.responseByOption[option]) ||
-        (question.responseByGender && quizData.gender
-          ? question.responseByGender[quizData.gender as 'HOMBRE' | 'MUJER']
-          : undefined) ||
         question.response;
 
       const responseMessage: Message = {
@@ -314,18 +282,13 @@ export default function Chat({ onNavigate }: ChatProps) {
   };
 
   const handleViewPlan = () => {
-    // Removido: tracking.ctaClicked (gerenciado pelo Utmify)
     ga4Tracking.chatCTAClick();
     onNavigate('resultado');
   };
 
+  // Com opções fixas, não há mais leitura de gender por render.
   const getQuestionOptions = (question: Question): string[] => {
-    const quizData = storage.getQuizData();
-    if (question.optionsByGender && quizData.gender) {
-      const gender = quizData.gender as 'HOMBRE' | 'MUJER';
-      return question.optionsByGender[gender] || question.options || [];
-    }
-    return question.options || [];
+    return question.options;
   };
 
   const isComplete = progress >= 100;

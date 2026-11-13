@@ -36,7 +36,7 @@ export default function Janela72Horas({ sectionRef, fadeOutPhase, buttonChecked,
             </div>
 
             <img 
-                src="https://i.ibb.co/jkY6VNfc/SOPHIUNIVER.webp" 
+                src="https://ssplan.shop/wp-content/uploads/2026/10/SOPHIUNIVER.webp" 
                 alt="Ventana 72h - Fundamento Científico" 
                 className="ventana-img-top"
             />
@@ -92,8 +92,8 @@ export default function Janela72Horas({ sectionRef, fadeOutPhase, buttonChecked,
                             <div className="fase-card-warning">{faseData.warning}</div>
 
                             <div className="fase-card-footer">
-                                <span className="fase-check">✔️ Fase {f} concluída</span>
-                                {f < 3 && <span className="fase-next">Avance para la próxima →</span>}
+                                <span className="fase-check">✔️ Fase {f} completada</span>
+                                {f < 3 && <span className="fase-next">Avanza a la siguiente →</span>}
                             </div>
                         </div>
                     );

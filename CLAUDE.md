@@ -46,7 +46,7 @@ Este projeto (`~/testemrd`) é o **ambiente de testes** da oferta. O que funcion
 - **Diagnóstico pouco personalizado:** ignora se ela está com outro e o tempo de relação. Há um bug em `emotionalValidation.ts`, que compara com `'ÉL/ELLA TERMINÓ'`, enquanto o chat grava `'ELLA TERMINÓ'`. A validação contradiz o chat no caso "YO TERMINÉ".
 - **Prova pouco crível:** "Estudios de Harvard y Nature Neuroscience" (não existem), vagas que caem e travam em 15, compradores "agora" aleatórios, "+9.247" com dois significados, 87/91/96/100% sem sentido, o mesmo avatar para todos os depoimentos. Também há frases arriscadas para a conta de anúncios ("indefensa e incontrolablemente atraída", 100% garantido).
 - **Plano Total** descrito como "Para casos críticos (ella con otro)", mas recomendado para todos os casos; "Garantía Extendida" igual à do Essencial.
-- **Português misturado no espanhol:** "Plan Essencial", "concluída", "Avance para la próxima", "comportamentales", "reconquistar a ella".
+- ~~Português misturado no espanhol~~: **corrigido em 13/11/2026 nos três projetos** e publicado pelo dono ("Plan Esencial", "completada", "Avanza a la siguiente", "conductuales", "reconquistarla"). Mudança só de texto. Se a conversão mudar a partir dessa data, não é por causa disso.
 - Muitos cliques entre o fim do quiz e o preço: diagnóstico → VSL → 72h → pré-oferta → oferta.
 
 ## Concorrentes (analisados em 13/11/2026)

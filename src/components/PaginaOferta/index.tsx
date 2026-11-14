@@ -131,10 +131,10 @@ export default function PaginaOferta({
     };
 
     const testimonialAvatarByScenario: Record<string, string> = {
-        contacto_cero:    'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp',
-        con_otro:         'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp',
-        bloqueo:          'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp',
-        canal_abierto:    'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp',
+        contacto_cero:    'https://ssplan.shop/wp-content/uploads/2026/11/avatar-50.webp',
+        con_otro:         'https://ssplan.shop/wp-content/uploads/2026/11/avatar-55.webp',
+        bloqueo:          'https://ssplan.shop/wp-content/uploads/2026/11/avatar-45.webp',
+        canal_abierto:    'https://ssplan.shop/wp-content/uploads/2026/11/avatar-40.webp',
         ruptura_reciente: 'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp'
     };
 

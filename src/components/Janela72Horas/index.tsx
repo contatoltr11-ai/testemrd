@@ -30,13 +30,13 @@ export default function Janela72Horas({ sectionRef, fadeOutPhase, buttonChecked,
 
             <div className="ventana-scientific-intro">
                 <p>
-                    Después de acompañar a más de 9.000 hombres vimos algo que se repite: lo que haces en las primeras 72 horas decide si ella se acerca o se cierra.
+                    Después de acompañar a más de 9.000 hombres, vi algo que se repite: lo que haces en las primeras 72 horas decide si ella se acerca o se cierra.
                 </p>
             </div>
 
             <img 
-                src="https://ssplan.shop/wp-content/uploads/2026/10/SOPHIUNIVER.webp" 
-                alt="Ventana 72h - Fundamento Científico" 
+                src="https://ssplan.shop/wp-content/uploads/2026/11/ss-reun-3.webp"
+                alt="La Ventana de 72 horas"
                 className="ventana-img-top"
             />
 

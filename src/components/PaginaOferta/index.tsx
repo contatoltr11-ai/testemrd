@@ -90,7 +90,7 @@ export default function PaginaOferta({
             },
             con_otro: {
                 texto: 'Ella estaba con otro y yo pensé que la había perdido. Hoy fue nuestro aniversario y aceptó venir a la casa.',
-                autor: 'Jose R.'
+                autor: 'José R.'
             },
             bloqueo: {
                 texto: 'Me tenía bloqueado por todas partes. Dejé de insistir y seguí el plan. Me desbloqueó, y después me escribió para vernos.',

@@ -28,7 +28,7 @@ export default function PaginaOferta({
     const gender = quizData.gender || 'HOMBRE';
 
     // Detecta o cenário do lead com base no quizData (regra exata)
-    const detectScenario = (): 'contacto_cero' | 'con_otro' | 'bloqueo' | 'canal_abierto' | 'ruptura_reciente' => {
+    const detectScenario = (): 'contacto_cero' | 'con_otro' | 'bloqueo' | 'canal_abierto' | 'ruptura_reciente' | 'mismo_techo' => {
         // PRIORIDAD 1: Bloqueo (barrera objetiva, no hay contacto posible)
         if (quizData.currentSituation === 'BLOQUEADO') return 'bloqueo';
 
@@ -45,6 +45,10 @@ export default function PaginaOferta({
             quizData.timeSeparation === '1-4 SEMANAS'
         ) return 'ruptura_reciente';
 
+        // PRIORIDAD 3b: Hablan solo de lo necesario (viven juntos / hijos). Coherente con el diagnóstico
+        // ("todavía hablan") y con el disparador La Nostalgia — no es contacto cero.
+        if (quizData.currentSituation === 'SÓLO TEMAS NECESARIOS') return 'mismo_techo';
+
         // PRIORIDAD 4: Canal abierto = vínculo activo
         if (
             quizData.currentSituation === 'SOMOS AMIGOS' ||
@@ -55,8 +59,7 @@ export default function PaginaOferta({
         // PRIORIDAD 5: Sin contacto o contacto frío
         if (
             quizData.currentSituation === 'CONTACTO CERO' ||
-            quizData.currentSituation === 'ME IGNORA' ||
-            quizData.currentSituation === 'SÓLO TEMAS NECESARIOS'
+            quizData.currentSituation === 'ME IGNORA'
         ) return 'contacto_cero';
 
         // Fallback seguro: contacto cero (nunca contradice al lead)
@@ -70,15 +73,17 @@ export default function PaginaOferta({
     // 5 variáveis × 4 cenários
     const scenarioContent = {
         escenario_diagnostico: {
-            contacto_cero: 'Tu diagnóstico apuntó a un escenario concreto: contacto cero. El silencio no es el final. Pero cada día que pasa, el terreno cambia.',
-            con_otro: 'Tu diagnóstico apuntó a un escenario concreto: ella está con otro. Duele. Pero el mapa aún puede leerse con claridad.',
-            bloqueo: 'Tu diagnóstico apuntó a un escenario concreto: bloqueo. El primer paso no es insistir. Es entender si todavía existe una aproximación segura.',
+            contacto_cero: 'Tu diagnóstico apuntó a un escenario concreto: contacto cero.',
+            con_otro: 'Tu diagnóstico apuntó a un escenario concreto: ella está con otro.',
+            bloqueo: 'Tu diagnóstico apuntó a un escenario concreto: bloqueo. Insistir ahora solo la aleja más.',
+            mismo_techo: 'Tu diagnóstico apuntó a un escenario concreto: se hablan solo de lo necesario.',
             canal_abierto: 'Tu diagnóstico apuntó a un escenario concreto: canal abierto. Ella ya habla contigo. El problema no es llegar a ella, es cómo te ve cuando lo hace.',
             ruptura_reciente: 'Tu diagnóstico apuntó a un escenario concreto: ruptura reciente. El momento importa más que la intensidad.'
         },
         linea_caso: {
             contacto_cero: 'El silencio no es el final. Pero cada día que pasa, el terreno cambia.',
-            con_otro: 'Ella está con otro. Pero el mapa aún puede leerse con claridad.',
+            con_otro: 'Duele. Pero el mapa aún puede leerse con claridad.',
+            mismo_techo: 'Hablan, pero como dos desconocidos. Lo que cambia eso no es hablar más, es cómo te ve cuando hablan.',
             bloqueo: 'El bloqueo no significa que la puerta esté cerrada para siempre. Significa que el primer paso es otro.',
             canal_abierto: 'La amistad que quedó es una puerta abierta. Pero puerta abierta no siempre es entrada.',
             ruptura_reciente: 'La ruptura está fresca. Y el timing decide si tu próxima acción abre o cierra la puerta.'
@@ -103,6 +108,10 @@ export default function PaginaOferta({
             ruptura_reciente: {
                 texto: 'Al principio actué por impulso y empeoré todo. Después seguí el plan, fase por fase. Una noche me llamó y me dijo que no puede tirar todo a la basura.',
                 autor: 'Diego F.'
+            },
+            mismo_techo: {
+                texto: 'Éramos como desconocidos bajo el mismo techo. Ahora me dice que me nota distinto, que me estoy arreglando más.',
+                autor: 'Jorge P.'
             }
         },
         recomendacion_plan: {
@@ -110,14 +119,16 @@ export default function PaginaOferta({
             con_otro: 'Para tu caso te recomiendo el Plan Completo: incluye el módulo «Si ya está con otro», que es justo tu situación.',
             bloqueo: 'Para tu caso te recomiendo el Plan Completo: te muestra cuál es el primer paso correcto para no cerrar más la puerta, y cómo leer las señales cuando empiece a abrirse.',
             canal_abierto: 'Para tu caso te recomiendo el Plan Completo: te muestra cómo cambiar la forma en que te ve cuando hablan, sin perder el contacto que ya tienen.',
-            ruptura_reciente: 'Para tu caso te recomiendo el Plan Completo: los primeros días son los más delicados, y ahí cada paso en falso pesa el doble.'
+            ruptura_reciente: 'Para tu caso te recomiendo el Plan Completo: los primeros días son los más delicados, y ahí cada paso en falso pesa el doble.',
+            mismo_techo: 'Para tu caso te recomiendo el Plan Completo: incluye la guía «¿Me voy de la casa o me quedo?», para cuando todavía la ves (por la casa o por los hijos) y no puedes desaparecer.'
         },
         cta_final: {
             contacto_cero: 'Quiero mi plan para romper el silencio',
             con_otro: 'Quiero mi plan aunque esté con otro',
             bloqueo: 'Quiero mi plan y dar el primer paso correcto',
             canal_abierto: 'Quiero mi plan para que me vea distinto',
-            ruptura_reciente: 'Quiero mi plan antes de dar otro paso en falso'
+            ruptura_reciente: 'Quiero mi plan antes de dar otro paso en falso',
+            mismo_techo: 'Quiero mi plan para que me vuelva a mirar'
         }
 
     } as const;
@@ -127,7 +138,8 @@ export default function PaginaOferta({
         con_otro:         'https://ssplan.shop/wp-content/uploads/2026/10/02-valentina.webp',
         bloqueo:          'https://ssplan.shop/wp-content/uploads/2026/10/03-camila.webp',
         canal_abierto:    'https://ssplan.shop/wp-content/uploads/2026/10/lucia.webp',
-        ruptura_reciente: 'https://ssplan.shop/wp-content/uploads/2026/10/04-mariana.webp'
+        ruptura_reciente: 'https://ssplan.shop/wp-content/uploads/2026/10/04-mariana.webp',
+        mismo_techo:      'https://ssplan.shop/wp-content/uploads/2026/10/lucia.webp'
     };
 
     const testimonialAvatarByScenario: Record<string, string> = {
@@ -135,7 +147,8 @@ export default function PaginaOferta({
         con_otro:         'https://ssplan.shop/wp-content/uploads/2026/11/avatar-55.webp',
         bloqueo:          'https://ssplan.shop/wp-content/uploads/2026/11/avatar-45.webp',
         canal_abierto:    'https://ssplan.shop/wp-content/uploads/2026/11/avatar-40.webp',
-        ruptura_reciente: 'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp'
+        ruptura_reciente: 'https://ssplan.shop/wp-content/uploads/2026/10/carlos-prova.webp',
+        mismo_techo:      'https://ssplan.shop/wp-content/uploads/2026/11/avatar-50.webp'
     };
 
     return (
